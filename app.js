@@ -1,6 +1,7 @@
 //require modules
 const express = require('express');
 const morgan = require('morgan');
+const storyRoutes = require('./routes/storyRoutes');
 
 //create app
 const app = express();
@@ -19,6 +20,9 @@ app.use(morgan('tiny'));
 app.get('/', (req, res) => {
 	res.render('index');
 });
+
+app.use('/stories', storyRoutes);
+
 //start the server
 app.listen(port, host, () => {
 	console.log('Server is running on port', port);
