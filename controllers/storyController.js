@@ -1,6 +1,9 @@
+const model = require('../models/story');
+
 //GET /stories : send all stories to the user
 exports.index = (req, res) => {
-	res.send('send all stories');
+	let stories = model.find();
+	res.render('./story/index', { stories });
 };
 
 //GET /stories/new : send html form for creating a new story

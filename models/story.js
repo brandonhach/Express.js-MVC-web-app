@@ -18,4 +18,10 @@ const stories = [
 	},
 ];
 
-console.log(stories[0]);
+exports.find = () => {
+	return stories;
+};
+
+exports.findById = (id) => {
+	return stories.find((story) => story.id === id);
+};
