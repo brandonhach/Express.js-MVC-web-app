@@ -18,7 +18,12 @@ exports.create = (req, res) => {
 
 //GET /stories/:id : send details of story identified by id
 exports.show = (req, res) => {
-	res.send('send story with id' + req.params.id);
+	let id = req.params.id;
+	let story = model.findById(id);
+	if (story) {
+		res.render('./story/show', { story });
+	}
+	res.status(404).send('Cannot find story with id ' + id);
 };
 
 //GET /stories/:id/edit : send html form for editing an existing story
