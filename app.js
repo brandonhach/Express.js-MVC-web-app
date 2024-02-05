@@ -18,12 +18,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('tiny'));
 app.use(methodOverride('_method'));
 
-app.use((req, res, next) => {
-	let err = new Error('The server cannot locate ' + req.url);
-	err.status = 404;
-	next(err);
-});
-
 app.use((err, req, res, next) => {
 	if (!err.status) {
 		err.status = 500;
