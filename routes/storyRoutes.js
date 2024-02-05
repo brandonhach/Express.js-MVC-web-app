@@ -21,7 +21,7 @@ router.get('/:id/edit', controller.edit);
 //PUT /stories/:id : update the story identified by id
 router.put('/:id', controller.update);
 
-//DELETE /stories/:id : delte the story identified by id
-router.put('/:id', controller.delete);
+//DELETE /stories/:id : delete the story identified by id
+router.delete('/:id', controller.delete);
 
 module.exports = router;

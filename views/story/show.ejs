@@ -4,6 +4,12 @@
 	<h4><%= story.title %></h4>
 	<small>Posted <%= story.createdAt %> by <%= story.author%></small>
 	<div id="story"><%= story.content %></div>
+	<form>
+		<button type="submit" formmethod="get" formaction="/stories/<%= story.id%>/edit">Edit</button>
+	</form>
+	<form action="/stories/<%= story.id %>?_method=DELETE" method="POST">
+		<button type="submit">Delete</button>
+	</form>
 </div>
 
 <%- include('../partials/footer.ejs') %>

@@ -23,9 +23,12 @@ exports.show = (req, res) => {
 	let id = req.params.id;
 	let story = model.findById(id);
 	if (story) {
-		res.render('./story/show', { story });
+		return res.render('./story/show', { story });
 	}
-	res.status(404).send('Cannot find story with id ' + id);
+	// If the story is not found, then send a 404 error.
+	let err = new Error('Cannot find a story with id ' + id);
+	err.status = 404;
+	next(err);
 };
 
 //GET /stories/:id/edit : send html form for editing an existing story
@@ -35,7 +38,9 @@ exports.edit = (req, res) => {
 	if (story) {
 		res.render('./story/edit', { story });
 	} else {
-		res.status(404).send('Cannot find story with id ' + id);
+		let err = new Error('Cannot find a story with id ' + id);
+		err.status = 404;
+		next(err);
 	}
 };
 
@@ -47,11 +52,21 @@ exports.update = (req, res) => {
 	if (model.updateById(id, story)) {
 		res.redirect('/stories/' + id);
 	} else {
-		res.status(404).send('Cannot find story with id ' + id);
+		let err = new Error('Cannot find a story with id ' + id);
+		err.status = 404;
+		next(err);
 	}
 };
 
-//DELETE /stories/:id : elte the story identified by id
+//DELETE /stories/:id : delete the story identified by id
 exports.delete = (req, res) => {
-	res.send('delete story with id' + req.params.id);
+	let id = req.params.id;
+
+	if (model.deleteById(id)) {
+		res.redirect('/stories');
+	} else {
+		let err = new Error('Cannot find a story with id ' + id);
+		err.status = 404;
+		next(err);
+	}
 };

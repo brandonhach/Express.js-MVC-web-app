@@ -43,3 +43,13 @@ exports.updateById = (id, newStory) => {
 		return false;
 	}
 };
+
+exports.deleteById = (id) => {
+	let index = stories.findIndex((story) => story.id === id);
+	if (index !== -1) {
+		stories.splice(index, 1);
+		return true;
+	} else {
+		return false;
+	}
+};
