@@ -1,25 +1,25 @@
 const model = require('../models/story');
 
 //GET /stories : send all stories to the user
-exports.index = (req, res) => {
+exports.index = (req, res, next) => {
 	let stories = model.find();
 	res.render('./story/index', { stories });
 };
 
 //GET /stories/new : send html form for creating a new story
-exports.new = (req, res) => {
+exports.new = (req, res, next) => {
 	res.render('./story/new');
 };
 
 //POST /stories : create a new story
-exports.create = (req, res) => {
+exports.create = (req, res, next) => {
 	let story = req.body;
 	model.save(story);
 	res.redirect('./stories');
 };
 
 //GET /stories/:id : send details of story identified by id
-exports.show = (req, res) => {
+exports.show = (req, res, next) => {
 	let id = req.params.id;
 	let story = model.findById(id);
 	if (story) {
@@ -32,7 +32,7 @@ exports.show = (req, res) => {
 };
 
 //GET /stories/:id/edit : send html form for editing an existing story
-exports.edit = (req, res) => {
+exports.edit = (req, res, next) => {
 	let id = req.params.id;
 	let story = model.findById(id);
 	if (story) {
@@ -45,7 +45,7 @@ exports.edit = (req, res) => {
 };
 
 //PUT /stories/:id : update the story identified by id
-exports.update = (req, res) => {
+exports.update = (req, res, next) => {
 	let story = req.body;
 	let id = req.params.id;
 
@@ -59,7 +59,7 @@ exports.update = (req, res) => {
 };
 
 //DELETE /stories/:id : delete the story identified by id
-exports.delete = (req, res) => {
+exports.delete = (req, res, next) => {
 	let id = req.params.id;
 
 	if (model.deleteById(id)) {

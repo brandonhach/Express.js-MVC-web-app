@@ -18,6 +18,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('tiny'));
 app.use(methodOverride('_method'));
 
+//set up routes
+app.get('/', (req, res) => {
+	res.render('index');
+});
+
+app.use('/stories', storyRoutes);
+
+app.use((req, res, next) => {
+	let err = new Error('The server cannot locate ' + req.url);
+	err.status = 404;
+	next(err);
+});
+
 app.use((err, req, res, next) => {
 	if (!err.status) {
 		err.status = 500;
@@ -26,13 +39,6 @@ app.use((err, req, res, next) => {
 	res.status(err.status);
 	res.render('error', { error: err });
 });
-//set up routes
-app.get('/', (req, res) => {
-	res.render('index');
-});
-
-app.use('/stories', storyRoutes);
-
 //start the server
 app.listen(port, host, () => {
 	console.log('Server is running on port', port);
